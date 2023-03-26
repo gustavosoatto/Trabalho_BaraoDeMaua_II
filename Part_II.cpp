@@ -144,6 +144,11 @@ int main()
         }
         else if (user_option == 6)
         {
+            }
+            else
+            {
+                cout << "Opção inválida, você tem " << user_cliente_quantidade << " cliente(s).\n";
+            }
         }
         else if (user_option == 7)
         {
