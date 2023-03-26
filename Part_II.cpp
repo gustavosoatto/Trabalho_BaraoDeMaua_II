@@ -144,6 +144,15 @@ int main()
         }
         else if (user_option == 6)
         {
+            cout << "Qual cliente deseja excluir?\n";
+            cin >> user_option;
+            if (user_option <= user_cliente_quantidade && user_option > 0)
+            {
+                for (int i = user_option - 1; i < user_cliente_quantidade - 1; i++)
+                {
+                    user_cliente[i] = user_cliente[i + 1];
+                }
+                user_cliente[user_cliente_quantidade - 1] = {""};
             }
             else
             {
