@@ -19,6 +19,14 @@
 #include <string>
 using namespace std;
 
+struct parcela
+{
+    int valor;
+    bool pagamento;
+    string data_pagamento;
+    string data_vencimento;
+};
+
 struct cliente
 {
     string nome;
@@ -27,15 +35,7 @@ struct cliente
     string data_nascimento;
     string data_emprestimo;
     string total_emprestimo;
-    parcela parcelas_mensais[12] = {0000, true, "", ""};
-};
-
-struct parcela
-{
-    int valor;
-    bool pagamento;
-    string data_pagamento;
-    string data_vencimento;
+    parcela parcelas_mensais[12];
 };
 
 int meses(string mes_string)
