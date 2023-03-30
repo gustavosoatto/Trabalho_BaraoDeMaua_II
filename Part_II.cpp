@@ -45,56 +45,68 @@ int meses(string mes_string)
     if (mes_string == "jan" || mes_string == "janeiro")
     {
         mes_number = 1;
+        return mes_number;
     }
     else if (mes_string == "fev" || mes_string == "fevereiro")
     {
         mes_number = 2;
+        return mes_number;
     }
     else if (mes_string == "mar" || mes_string == "março" || mes_string == "marco")
     {
         mes_number = 3;
+        return mes_number;
     }
     else if (mes_string == "abr" || mes_string == "abril")
     {
         mes_number = 4;
+        return mes_number;
     }
     else if (mes_string == "mai" || mes_string == "maio")
     {
         mes_number = 5;
+        return mes_number;
     }
     else if (mes_string == "jun" || mes_string == "junho")
     {
         mes_number = 6;
+        return mes_number;
     }
     else if (mes_string == "jul" || mes_string == "julho")
     {
         mes_number = 7;
+        return mes_number;
     }
     else if (mes_string == "ago" || mes_string == "agosto")
     {
         mes_number = 8;
+        return mes_number;
     }
     else if (mes_string == "set" || mes_string == "setembro")
     {
         mes_number = 9;
+        return mes_number;
     }
     else if (mes_string == "out" || mes_string == "outubro")
     {
         mes_number = 10;
+        return mes_number;
     }
     else if (mes_string == "nov" || mes_string == "novembro")
     {
         mes_number = 11;
+        return mes_number;
     }
     else if (mes_string == "dez" || mes_string == "dezembro")
     {
         mes_number = 12;
+        return mes_number;
     }
     else
     {
-        cout << "Mês inválido";
+        cout << "Mês inválido\n";
+        return 0;
     }
-    return mes_number;
 }
 
 string meses_for_string(int mes_number)
@@ -105,38 +117,49 @@ string meses_for_string(int mes_number)
     {
     case 1:
         mes_string = "Janeiro";
+        return mes_string;
     case 2:
         mes_string = "Fevereiro";
+        return mes_string;
     case 3:
         mes_string = "Março";
+        return mes_string;
     case 4:
         mes_string = "Abril";
+        return mes_string;
     case 5:
         mes_string = "Maio";
+        return mes_string;
     case 6:
         mes_string = "Junho";
+        return mes_string;
     case 7:
         mes_string = "Julho";
+        return mes_string;
     case 8:
         mes_string = "Agosto";
+        return mes_string;
     case 9:
         mes_string = "Setembro";
+        return mes_string;
     case 10:
         mes_string = "Outubro";
+        return mes_string;
     case 11:
         mes_string = "Novembro";
+        return mes_string;
     case 12:
         mes_string = "Dezembro";
+        return mes_string;
     default:
         cout << "Mês inválido, informe um número entre 1 - 12 de acordo com o mês desejado" << endl;
+        return 0;
     }
-    return mes_string;
 }
 
 int main()
 {
     int user_option = 0, user_cliente_quantidade = 0, user_option_2 = 0;
-    cin.ignore();
 
     cout << "Quantos cliente deseja cadastrar?\n";
     cin >> user_cliente_quantidade;
@@ -170,8 +193,13 @@ int main()
                 cin >> user_cliente[i].data_emprestimo;
                 cout << "Valor total do empréstimo\n";
                 cin >> user_cliente[i].total_emprestimo;
-                // cout << "Informações sobre parcelas mensais de empréstimo." << endl;
-                // cin >> user_cliente[i].parcelas_mensais;
+                for (int j = 0; j < 12; j++)
+                {
+                    user_cliente[i].parcelas_mensais[j].valor = 0000;
+                    user_cliente[i].parcelas_mensais[j].pagamento = false;
+                    user_cliente[i].parcelas_mensais[j].data_pagamento = "00/00/00";
+                    user_cliente[i].parcelas_mensais[j].data_vencimento = "00/00/00";
+                }
             }
         }
         else if (user_option == 2) // ii. Visualizar as informações de um cliente
@@ -187,13 +215,13 @@ int main()
                      << user_cliente[user_option - 1].data_nascimento << endl
                      << user_cliente[user_option - 1].data_emprestimo << endl
                      << user_cliente[user_option - 1].total_emprestimo << endl;
-                for (int i = 1; i <= 12; i++)
+                for (int k = 0; k < 12; k++)
                 {
-                    cout << "Informações das parcelas do mês de " << meses_for_string(i) << endl;
-                    cout << user_cliente[user_option - 1].parcelas_mensais[i].valor << endl;
-                    cout << user_cliente[user_option - 1].parcelas_mensais[i].pagamento << endl;
-                    cout << user_cliente[user_option - 1].parcelas_mensais[i].data_pagamento << endl;
-                    cout << user_cliente[user_option - 1].parcelas_mensais[i].data_vencimento << endl;
+                    cout << "Informações das parcelas do mês de " << meses_for_string(k + 1) << endl;
+                    cout << user_cliente[user_option - 1].parcelas_mensais[k].valor << endl;
+                    cout << user_cliente[user_option - 1].parcelas_mensais[k].pagamento << endl;
+                    cout << user_cliente[user_option - 1].parcelas_mensais[k].data_pagamento << endl;
+                    cout << user_cliente[user_option - 1].parcelas_mensais[k].data_vencimento << endl;
                 }
             }
             else
@@ -267,11 +295,11 @@ int main()
                             cin >> pagamento;
                             if (pagamento == 's')
                             {
-                                user_cliente[user_option - 1].parcelas_mensais[meses(mes)].pagamento << true;
+                                user_cliente[user_option - 1].parcelas_mensais[meses(mes)].pagamento = true;
                             }
                             else if (pagamento == 'n')
                             {
-                                user_cliente[user_option - 1].parcelas_mensais[meses(mes)].pagamento << false;
+                                user_cliente[user_option - 1].parcelas_mensais[meses(mes)].pagamento = false;
                             }
                             else
                             {
@@ -294,7 +322,7 @@ int main()
         else if (user_option == 4) // iv. Cadastrar parcela paga
         {
             int valor = 0;
-            bool pagamento = false;
+            char pagamento = '\0';
             string mes = "";
 
             cout << "Qual cliente deseja fazer alterações? (número do cliente)\n";
@@ -302,25 +330,25 @@ int main()
             cout << "Qual mês deseja cadastrar?(jan,fev,mar,...)\n";
             cin >> mes;
             cout << "Qual o valor da parcela?\n";
-            cin >> user_cliente[user_option - 1].parcelas_mensais[meses(mes)].valor;
+            cin >> user_cliente[user_option - 1].parcelas_mensais[meses(mes) - 1].valor;
             cout << "A parcela já foi paga?(s/n)\n";
             cin >> pagamento;
             if (pagamento == 's')
             {
-                user_cliente[user_option - 1].parcelas_mensais[meses(mes)].pagamento << true;
+                user_cliente[user_option - 1].parcelas_mensais[meses(mes) - 1].pagamento = true;
                 cout << "Qual a data do pagamento?(00/00/00)\n";
-                cin >> user_cliente[user_option - 1].parcelas_mensais[meses(mes)].data_pagamento;
+                cin >> user_cliente[user_option - 1].parcelas_mensais[meses(mes) - 1].data_pagamento;
             }
             else if (pagamento == 'n')
             {
-                user_cliente[user_option - 1].parcelas_mensais[meses(mes)].pagamento << false;
+                user_cliente[user_option - 1].parcelas_mensais[meses(mes) - 1].pagamento = false;
             }
             else
             {
                 cout << "Pagamento inválido\n";
             }
             cout << "Qual a data do vencimento?(00/00/00)\n";
-            cin >> user_cliente[user_option - 1].parcelas_mensais[meses(mes)].data_vencimento;
+            cin >> user_cliente[user_option - 1].parcelas_mensais[meses(mes) - 1].data_vencimento;
         }
         else if (user_option == 5) // v. Cadastrar empréstimo.
         {
