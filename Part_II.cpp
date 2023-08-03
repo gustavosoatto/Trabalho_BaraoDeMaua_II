@@ -1,7 +1,7 @@
 // GRUPO:
-// GUSTAVO SOATTO SANTOS 2141790
-//
-//
+// Fernando Perez Borin - 2125219
+// Gustavo Soatto Santos - 2141790
+// Julio Fábio Dos Santos Melo - 2165170
 
 // B)(70 pontos) Uma empresa financeira necessita de um programa que organize o seu cadastro de clientes. Desenvolva um programa em C++ que:
 // 1. Permita cadastrar e gerenciar clientes com as seguintes informações: nome do cliente, CPF, endereço, data de nascimento, data do empréstimo, valor total do empréstimo e informações sobre parcelas mensais de empréstimo. Um cliente deve ser cadastrado por vez.
@@ -163,11 +163,10 @@ int main()
 {
     setlocale(LC_ALL, "pt_br.UTF-8");
     int user_option = 0, user_cliente_quantidade = 0, user_option_2 = 0;
+    cliente user_cliente[10];
+    string mes = "";
 
-    cout << "Quantos cliente deseja cadastrar?\n";
-    cin >> user_cliente_quantidade;
-    cliente user_cliente[user_cliente_quantidade];
-
+    cout << "Você pode cadastrar até 10 clientes\n";
     do
     {
         cout << "1. Cadastrar cliente\n"
@@ -178,9 +177,15 @@ int main()
              << "6. Excluir cliente\n"
              << "7. SAIR\n";
         cin >> user_option;
-
-        if (user_option == 1) // i. Cadastrar cliente
+        // Verificação para que o usuário não insira um valor fora do escopo
+        while (user_option > 7 || user_option < 1)
         {
+            cout << "Opcao invalida (use apenas numeros 1.2.3.4.5.6.7)\n";
+        }
+
+        switch (user_option)
+        {
+        case 1: // i. Cadastrar cliente
             cout << "Para cadastrar um cliente digite: \n";
             for (int i = 0; i < user_cliente_quantidade; i++)
             {
@@ -204,9 +209,8 @@ int main()
                     user_cliente[i].parcelas_mensais[j].data_vencimento = "00/00/00";
                 }
             }
-        }
-        else if (user_option == 2) // ii. Visualizar as informações de um cliente
-        {
+            break;
+        case 2: // ii. Visualizar as informações de um cliente
             cout << "Qual cliente deseja ver?\n";
             cin >> user_option;
             if (user_option <= user_cliente_quantidade && user_option > 0)
@@ -232,9 +236,7 @@ int main()
             {
                 cout << "Opcao invalida, você tem " << user_cliente_quantidade << " cliente(s).\n";
             }
-        }
-        else if (user_option == 3) // iii. Editar as informações de um cliente
-        {
+        case 3: // iii. Editar as informações de um cliente
             do
             {
                 int user_option_3 = 0;
@@ -347,12 +349,9 @@ int main()
                     cin >> user_cliente[user_option - 1].total_parcelas;
                 }
             } while (user_option_2 != 0);
-        }
-        else if (user_option == 4) // iv. Cadastrar parcela paga
-        {
+        case 4: // iv. Cadastrar parcela paga
             int valor = 0;
             char pagamento = '\0';
-            string mes = "";
 
             cout << "Qual cliente deseja cadastrar a parcela? (numero do cliente)\n";
             cin >> user_option;
@@ -387,9 +386,7 @@ int main()
             {
                 cout << "O cliente deve ter um emprestimo ativo para poder pagar uma parcela.\n";
             }
-        }
-        else if (user_option == 5) // v. Cadastrar empréstimo.
-        {
+        case 5: // v. Cadastrar empréstimo.
             cout << "Qual cliente deseja cadastrar um emprestimo?\n";
             cin >> user_option;
 
@@ -399,9 +396,8 @@ int main()
             cin >> user_cliente[user_option - 1].total_parcelas;
             cout << "Qual a data do emprestimo?(00/00/00)\n";
             cin >> user_cliente[user_option - 1].data_emprestimo;
-        }
-        else if (user_option == 6) // vi. Excluir cliente
-        {
+
+        case 6: // vi. Excluir cliente
             cout << "Qual cliente deseja excluir?\n";
             cin >> user_option;
             if (user_option <= user_cliente_quantidade && user_option > 0)
@@ -416,18 +412,9 @@ int main()
             {
                 cout << "Opcao invalida, você tem " << user_cliente_quantidade << " cliente(s).\n";
             }
-        }
-        else if (user_option == 7) // vii. Sair
-        {
-            return true;
-        }
-        else
-        {
-            cout << "Opcao invalida (use apenas numeros 1.2.3.4.5.6.7)\n";
+
+        case 7: // vii. Sair
+            break;
         }
     } while (user_option != 7);
 }
-
-/*BUG CONHECIDOS:
-Se o usuário entrar com um tipo que não seja int em "user_option" o código entra em um loop infinito
-*/
